@@ -1,7 +1,7 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
-Bureaucrat::Bureaucrat() : _name("default"), _grade(150) {}
+Bureaucrat::Bureaucrat() : _name("defaultBureaucrat"), _grade(150) {}
 
 Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name), _grade(grade)
 {
@@ -54,12 +54,25 @@ void Bureaucrat::decrementGrade(void)
     }
 }
 
-void Bureaucrat::signForm(Form &form)
+void Bureaucrat::signForm(AForm &form)
 {
-    if(form.beSigned(*this))
+    if(_grade <= form.getGradeToSign())
         std::cout << GREEN << _name << " signs " << form.getName() << RESET << std::endl;
     else
         std::cout << RED << _name << " cannot sign " << form.getName() << RESET << std::endl;
+}
+
+void Bureaucrat::executeForm(AForm const &form) const
+{
+    try
+    {
+        form.execute(*this);
+        std::cout << GREEN << _name << " executes " << form.getName() << RESET << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << RED << _name << " cannot execute " << form.getName() << RESET << std::endl;
+    }
 }
 
 Bureaucrat::~Bureaucrat() {}
@@ -72,10 +85,4 @@ std::string Bureaucrat::getName() const
 int Bureaucrat::getGrade() const
 {
     return (this->_grade);
-}
-
-std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
-{
-    os << "Bureaucrat: " << bureaucrat.getName() << ", grade: " << bureaucrat.getGrade();
-    return(os);
 }

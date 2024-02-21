@@ -3,6 +3,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
 int main(void)
 {
@@ -129,6 +130,19 @@ int main(void)
     std::cout << "Bureaucrat grade:" << YELLOW << bureaucrat_12.getGrade() << RESET << std::endl;
     PP_form_1.beSigned(bureaucrat_12);
     PP_form_1.execute(bureaucrat_12);
+
+    std::cout << GREEN "\n||||||Intern TESTS||||||\n" RESET << std::endl;
+
+    Intern intern_1;
+    AForm *form_1 = intern_1.makeForm("shrubbery creation", "Home");
+    AForm *form_2 = intern_1.makeForm("robotomy request", "Home");
+    AForm *form_3 = intern_1.makeForm("presidential pardon", "Home");
+    AForm *form_4 = intern_1.makeForm("random form", "Home");
+
+    delete form_1;
+    delete form_2;
+    delete form_3;
+    delete form_4;
 
     return (0);
 }

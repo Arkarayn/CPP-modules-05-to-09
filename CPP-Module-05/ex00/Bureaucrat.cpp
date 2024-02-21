@@ -1,6 +1,6 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat()
+Bureaucrat::Bureaucrat() : _name("default"), _grade(150)
 {
     std::cout << "~~~Bureaucrat default constructor called~~~" << std::endl;
 }
@@ -41,4 +41,10 @@ std::string Bureaucrat::getName() const
 int Bureaucrat::getGrade() const
 {
     return (this->_grade);
+}
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
+{
+    os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade();
+    return (os);
 }
