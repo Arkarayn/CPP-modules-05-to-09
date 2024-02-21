@@ -62,6 +62,19 @@ void Bureaucrat::signForm(AForm &form)
         std::cout << RED << _name << " cannot sign " << form.getName() << RESET << std::endl;
 }
 
+void Bureaucrat::executeForm(AForm const &form) const
+{
+    try
+    {
+        form.execute(*this);
+        std::cout << GREEN << _name << " executes " << form.getName() << RESET << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << RED << _name << " cannot execute " << form.getName() << RESET << std::endl;
+    }
+}
+
 Bureaucrat::~Bureaucrat() {}
 
 std::string Bureaucrat::getName() const

@@ -9,7 +9,7 @@ class Bureaucrat
         const std::string _name;
         int _grade;
     public:
-        Bureaucrat() : _name("default"), _grade(150) {}
+        Bureaucrat();
         Bureaucrat(std::string name, int grade);
         virtual ~Bureaucrat();
 
@@ -36,3 +36,5 @@ class Bureaucrat
         std::string getName() const;
         int getGrade() const;
 };
+
+std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat);

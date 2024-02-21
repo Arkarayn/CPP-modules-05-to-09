@@ -20,6 +20,7 @@ class AForm
         bool getSigned() const;
         int getGradeToSign() const;
         int getGradeToExecute() const;
+        virtual void execute(Bureaucrat const &executor) const = 0;
 
         class GradeTooLowToSignException : public std::exception
         {

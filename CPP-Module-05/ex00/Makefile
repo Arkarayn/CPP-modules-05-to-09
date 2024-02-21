@@ -28,6 +28,8 @@ clean:
 	clear
 
 fclean: clean
+	$(RM) $(NAME)
+	clear
 
 re: clean all
 	clear
