@@ -1,4 +1,4 @@
-NAME = Bureaucrat
+NAME = convert
 
 RM = rm -rf
 
@@ -6,7 +6,7 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -Wuninitialized
 
-SRC = 	main.cpp
+SRC = 	main.cpp ScalarConverter.cpp
 O_SRC = $(SRC:.cpp=.o)
 
 BARS := "▰▰▱▱▱▱▱▱▱▱▱ 17%" "▰▰▰▱▱▱▱▱▱▱▱ 23%" "▰▰▰▰▱▱▱▱▱▱▱ 38%" "▰▰▰▰▰▱▱▱▱▱▱ 42%" "▰▰▰▰▰▰▱▱▱▱▱ 51%" \
@@ -28,7 +28,7 @@ clean:
 	clear
 
 fclean: clean
-	$(RM) $(NAME) Home_shrubbery
+	$(RM) $(NAME)
 
 re: clean all
 	clear
