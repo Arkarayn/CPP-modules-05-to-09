@@ -1,4 +1,4 @@
-NAME = convert
+NAME = whatever
 
 RM = rm -rf
 
@@ -6,7 +6,7 @@ CC = c++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -Wuninitialized
 
-SRC = 	main.cpp ScalarConverter.cpp
+SRC = 	main.cpp Span.cpp
 O_SRC = $(SRC:.cpp=.o)
 
 BARS := "▰▰▱▱▱▱▱▱▱▱▱ 17%" "▰▰▰▱▱▱▱▱▱▱▱ 23%" "▰▰▰▰▱▱▱▱▱▱▱ 38%" "▰▰▰▰▰▱▱▱▱▱▱ 42%" "▰▰▰▰▰▰▱▱▱▱▱ 51%" \
@@ -19,7 +19,7 @@ all: $(NAME)
 		sleep 0.08; \
 	done
 	clear
-	@echo "Use 'make go' to run the program fast :D"
+	@echo "Use \033[1;4mmake go\033[0m to run the program fast :D"
 
 $(NAME): $(O_SRC)
 	$(CC) $(CFLAGS) $(O_SRC) -o $(NAME)
@@ -36,7 +36,7 @@ re: clean all
 
 go: clean all
 	clear
-	@./$(NAME) 42
+	@./$(NAME)
 
 cpp: 
 	touch main.cpp
@@ -44,7 +44,7 @@ cpp:
 	@read name; \
 	touch $$name.cpp $$name.hpp \
 	
-push: clean
+push: fclean
 	git add .
 	git commit
 	git push
