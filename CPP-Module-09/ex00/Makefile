@@ -1,19 +1,52 @@
-NAME = btc
+NAME		= btc
 
-RM = rm -rf
+RM			= rm -rf
 
-CC = c++
+CC			= c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -Wuninitialized
+CFLAGS		= -Wall -Wextra -Werror -std=c++98 -g -Wuninitialized
 
-SRC = 	main.cpp BitcoinExchange.cpp
-O_SRC = $(SRC:.cpp=.o)
+SRC			= main.cpp BitcoinExchange.cpp
 
-BARS := "▰▰▱▱▱▱▱▱▱▱▱ 17%" "▰▰▰▱▱▱▱▱▱▱▱ 23%" "▰▰▰▰▱▱▱▱▱▱▱ 38%" "▰▰▰▰▰▱▱▱▱▱▱ 42%" "▰▰▰▰▰▰▱▱▱▱▱ 51%" \
-		"▰▰▰▰▰▰▰▱▱▱▱ 65%" "▰▰▰▰▰▰▰▰▱▱▱ 79%" "▰▰▰▰▰▰▰▰▰▱▱ 87%" "▰▰▰▰▰▰▰▰▰▰ 94%" "▰▰▰▰▰▰▰▰▰▰ 100%" \
+OBJ			= $(SRC:.cpp=.o)
 
-all: $(NAME)
-	@for bar in $(BARS); do \
+BARS := "▰▱▱▱▱▱▱▱▱▱ 17%" "▰▰▱▱▱▱▱▱▱▱ 23%" "▰▰▰▱▱▱▱▱▱▱ 38%" "▰▰▰▰▱▱▱▱▱▱ 42%" "▰▰▰▰▰▱▱▱▱▱ 51%"  \
+		"▰▰▰▰▰▰▱▱▱▱ 65%" "▰▰▰▰▰▰▰▱▱▱ 79%" "▰▰▰▰▰▰▰▰▱▱ 87%" "▰▰▰▰▰▰▰▰▰▱ 94%" "▰▰▰▰▰▰▰▰▰▰ 100%" \
+
+all:	$(NAME)
+
+%.o:%.cpp
+	@$(CC) $(CFLAGS) -c  $< -o $@
+
+$(NAME): $(OBJ)
+	@if [ ! -f ${NAME} ]; then \
+		$(CC) $(CFLAGS) $(OBJ) -o $(NAME); \
+		make -s loading; \
+	fi
+
+clean:
+	$(RM) ${OBJ};
+	clear
+
+fclean: clean
+	@if [ -f ${NAME} ]; then \
+		$(RM) $(NAME); \
+	fi
+	clear
+
+re: fclean all
+
+go: re
+	clear
+	@./$(NAME) input.csv
+	
+push: fclean
+	git add .
+	git commit
+	git push
+
+loading:
+	for bar in $(BARS); do \
 		clear; \
 		echo "\n\n\n\t\t\t\033[1;31m$$bar\033[0m"; \
 		sleep 0.08; \
@@ -21,32 +54,4 @@ all: $(NAME)
 	clear
 	@echo "Use \033[1;4mmake go\033[0m to run the program fast :D"
 
-$(NAME): $(O_SRC)
-	$(CC) $(CFLAGS) $(O_SRC) -o $(NAME)
-
-clean:
-	$(RM) $(O_SRC)
-	clear
-
-fclean: clean
-	$(RM) $(NAME)
-
-re: clean all
-	clear
-
-go: clean all
-	clear
-	@./$(NAME) input.csv
-
-cpp: 
-	touch main.cpp
-	@echo "cpp&hpp files name: "
-	@read name; \
-	touch $$name.cpp $$name.hpp \
-	
-push: fclean
-	git add .
-	git commit
-	git push
-
-.PHONY: all clean fclean go re push
+.PHONY: all clean fclean re go push

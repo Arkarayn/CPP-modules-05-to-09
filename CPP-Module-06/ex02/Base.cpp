@@ -13,7 +13,9 @@ Base * generate(void)
 
 void identify(Base* p)
 {
-    if (dynamic_cast<A*>(p))
+    if (!p)
+        throw std::runtime_error("Null pointer");
+    else if (dynamic_cast<A*>(p))
         std::cout << "A" << std::endl;
     else if (dynamic_cast<B*>(p))
         std::cout << "B" << std::endl;
@@ -23,5 +25,12 @@ void identify(Base* p)
 
 void identify(Base& p)
 {
-    identify(&p);
+    try
+    {
+        identify(&p);
+    }
+    catch (std::exception &e)
+    {
+        std::cout << "Error: " << e.what() << std::endl;
+    }
 }

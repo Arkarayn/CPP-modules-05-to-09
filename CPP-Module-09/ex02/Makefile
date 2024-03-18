@@ -1,4 +1,4 @@
-NAME		= rpn
+NAME		= pmerge
 
 RM			= rm -rf
 
@@ -6,7 +6,7 @@ CC			= c++
 
 CFLAGS		= -Wall -Wextra -Werror -std=c++98 -g -Wuninitialized
 
-SRC			= main.cpp RPN.cpp
+SRC			= main.cpp PmergeMe.cpp
 
 OBJ			= $(SRC:.cpp=.o)
 
@@ -38,7 +38,7 @@ re: fclean all
 
 go: re
 	clear
-	@./$(NAME) "1 2 * 2 / 2 + 5 * 6 - 1 3 * - 4 5 * * 8 /"
+	@./$(NAME)
 
 cpp: 
 	touch main.cpp

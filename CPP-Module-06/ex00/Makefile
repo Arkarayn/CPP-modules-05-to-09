@@ -36,7 +36,7 @@ re: clean all
 
 go: clean all
 	clear
-	@./$(NAME) 42
+	@./$(NAME) 0.5
 
 cpp: 
 	touch main.cpp

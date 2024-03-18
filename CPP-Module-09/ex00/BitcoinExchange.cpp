@@ -24,31 +24,32 @@ void BitcoinExchange::GenerateCvs(void) {
 }
 
 void BitcoinExchange::ScapInput(const char* infile) {
-	std::ifstream		fname(infile);
-	std::string			in_line;
-	std::string			date;
-	std::string			val;
-	std::istringstream	ss;
+    std::ifstream fname(infile);
+    std::string in_line;
+    std::string date;
+    std::string val;
+    std::istringstream ss;
 
-	if (!fname.good( ))
-		throw std::invalid_argument("input file not found");
-	do {
-		std::getline(fname, in_line);
-		if (in_line.empty( ))
-			goto bb;
-		ss.str(in_line);
-		std::getline(ss, date, '|');
-    	std::getline(ss, val);
-		if (BitcoinExchange::CheckErrorDate(date) && BitcoinExchange::CheckErrorValue(val))
-			BitcoinExchange::FindStamp(date, std::atof(val.c_str( )));
-		bb:
-			;
-		in_line.clear( );
-		date.clear( );
-		val.clear( );
-		ss.clear( );
-	} while (fname.is_open( ) && !fname.eof( ));
-	fname.close( );
+    if (!fname.good())
+        throw std::invalid_argument("input file not found");
+    std::getline(fname, in_line);
+    do {
+        std::getline(fname, in_line);
+        if (in_line.empty())
+            goto bb;
+        ss.str(in_line);
+        std::getline(ss, date, '|');
+        std::getline(ss, val);
+        if (BitcoinExchange::CheckErrorDate(date) && BitcoinExchange::CheckErrorValue(val))
+            BitcoinExchange::FindStamp(date, std::atof(val.c_str()));
+    	bb:
+        in_line.clear();
+        date.clear();
+        val.clear();
+        ss.clear();
+    } while (fname.is_open() && !fname.eof());
+
+    fname.close();
 }
 
 void BitcoinExchange::FindStamp(const std::string& dateString, const double& val) {
